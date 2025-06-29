@@ -72,4 +72,9 @@ public class FramePuissance4 extends JFrame
 	{
 		this.panelPuissance4.majIhm();
 	}
+
+	public void rejouer()
+	{
+		this.panelPuissance4.rejouer();
+	}
 }

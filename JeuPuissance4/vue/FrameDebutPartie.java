@@ -141,7 +141,7 @@ public class FrameDebutPartie extends JFrame implements ActionListener
 
 		if(e.getSource() == this.btnCommencer)
 		{
-			this.estDebuter = true;
+			Controleur.debuterPartie = true;
 			this.dispose();
 		}
 	}
@@ -151,16 +151,4 @@ public class FrameDebutPartie extends JFrame implements ActionListener
 		return this.estDebuter;
 	}
 
-	public String getNomJ2() 
-	{ 
-		if(!this.tabBtnValider[1].isEnabled() && this.txtJoueur2.getText().trim().matches(".*[A-Za-z].*"))
-			return this.txtJoueur2.getText().trim();
-		return "";
-	}
-	public String getNomJ1() 
-	{ 
-		if(!this.tabBtnValider[0].isEnabled() && this.txtJoueur1.getText().trim().matches(".*[A-Za-z].*"))
-			return this.txtJoueur1.getText().trim();
-		return "";
-	}
 }

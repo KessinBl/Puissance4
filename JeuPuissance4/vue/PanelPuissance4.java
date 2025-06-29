@@ -16,7 +16,7 @@ import JeuPuissance4.Controleur;
 public class PanelPuissance4 extends JPanel implements ActionListener
 {
 	private Controleur      ctrl;
-	private JButton [] taButtons;
+	private JButton [] tabButtons;
 	private JPanel   panelDessin;
 
 	public PanelPuissance4(Controleur ctrl)
@@ -30,14 +30,14 @@ public class PanelPuissance4 extends JPanel implements ActionListener
 		/*******************************/
 		this.ctrl = ctrl;
 
-		this.taButtons = new JButton[this.ctrl.getNbColonne()];
-		for(int cpt = 0; cpt < this.taButtons.length; cpt++)
+		this.tabButtons = new JButton[this.ctrl.getNbColonne()];
+		for(int cpt = 0; cpt < this.tabButtons.length; cpt++)
 		{
-			this.taButtons[cpt] = new JButton("↓");
+			this.tabButtons[cpt] = new JButton("↓");
 		}
 
 		panelButtons = new JPanel(new GridLayout(1,this.ctrl.getNbColonne()-1));
-		for(JButton b : this.taButtons)
+		for(JButton b : this.tabButtons)
 		{
 			panelButtons.add(b);
 		}
@@ -57,7 +57,7 @@ public class PanelPuissance4 extends JPanel implements ActionListener
 		/*   Activation Des Composants   */
 		/*********************************/
 
-		for(JButton b : this.taButtons)
+		for(JButton b : this.tabButtons)
 		{
 			b.addActionListener(this);
 		}
@@ -92,27 +92,53 @@ public class PanelPuissance4 extends JPanel implements ActionListener
 		{
 			for(int col = 0; col < this.ctrl.getNbColonne(); col++)
 			{
-				if(this.ctrl.getCase(lig, col) == 1)
+				if(this.ctrl.getCase(lig, col) != null && this.ctrl.getCase(lig, col) == 1)
 				{
 					g.setColor(new Color(255,10,10));
 					g.fillOval(x + (col * 210), y, 100, 100);
 				}
 
-				if(this.ctrl.getCase(lig, col) == 1)
+				if(this.ctrl.getCase(lig, col) != null && this.ctrl.getCase(lig, col) == 2)
 				{
-					g.setColor(new Color(255,10,10));
+					g.setColor(new Color(200,200,10));
 					g.fillOval(x + (col * 210), y, 100, 100);
 				}
 			}
 			x = 35;
 			y += 130;
 		}
-		
+
 	}
 
 	public void actionPerformed(ActionEvent e)
 	{
+		if(this.ctrl.estGrillePleine())
+		{
+			for(JButton b : this.tabButtons)
+			{
+				b.setEnabled(false);
+			}
+		}
 
+		for(int cpt = 0; cpt < this.tabButtons.length; cpt++)
+		{
+			if(e.getSource() == this.tabButtons[cpt])
+			{
+				if(!this.ctrl.estPleine(cpt))
+				{
+					this.ctrl.setCase(this.ctrl.getJoueurEnCours(), cpt);
+					this.ctrl.setJoueurEnCours();
+				}
+			}
+		}
+	}
+
+	public void rejouer()
+	{
+		for(JButton b : this.tabButtons)
+		{
+			b.setEnabled(true);
+		}
 	}
 
 	public void majIhm()

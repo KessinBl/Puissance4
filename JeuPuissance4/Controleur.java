@@ -3,19 +3,23 @@ package JeuPuissance4;
 import JeuPuissance4.vue.FrameDebutPartie;
 import JeuPuissance4.vue.FramePuissance4;
 
-import java.util.Scanner;
 
 import JeuPuissance4.modele.Metier;
 
 public class Controleur 
 {
+	public static boolean debuterPartie = false;
 	private Metier          metier;
 	private FramePuissance4    ihm;
+
+	private Integer    joueurEnCours;
 
 	public Controleur()
 	{
 		this.metier = new Metier();
-		this.ihm    = new FramePuissance4(this);
+		this.ihm    = new FramePuissance4(this);;
+
+		this.joueurEnCours = this.joueurAuHasard();
 	}
 
 	/****************************/
@@ -37,6 +41,12 @@ public class Controleur
 		return this.metier.getCase(lig, col);
 	}
 
+	public int getJoueurEnCours()
+	{
+		return this.joueurEnCours;
+	}
+
+
 	/*******************************/
 	/*   Modificateurs attributs   */
 	/*******************************/
@@ -46,58 +56,76 @@ public class Controleur
 		return this.metier.affecterJoueur(numJoueur, nomJoueur);
 	}
 
+	public void setJoueurEnCours()
+	{
+		this.joueurEnCours = this.joueurEnCours == 1 ? 2 : 1;
+	}
+
 	/***********************/
 	/*   Autres Methodes   */
 	/***********************/
 
+	private Integer joueurAuHasard()
+	{
+		return 1 + (int)(Math.random() * 3);
+	}
+	
+	public boolean estGrillePleine()
+	{
+		return this.metier.estGrillePleine();
+	}
+
+	public boolean estPleine(int col)
+	{
+		return this.metier.estPleine(col);
+	}
+
+	public void setCase(Integer numJoueur,int col)
+	{
+		this.metier.setCase(numJoueur, col);
+		this.ihm.majIhm();
+		this.ihm.afficherGrille();
+	}
+
 	public void rejouer()
 	{
 		this.metier.rejouer();
-		this.ihm.majIhm();
+		this.ihm   .rejouer();
+		this.ihm   .majIhm ();
+	}
+
+	public void afficherGrille()
+	{
+		this.ihm.afficherGrille();
 	}
 
 	public void jouer()
 	{
-		FrameDebutPartie f = new FrameDebutPartie(this);
 		String nomJ1,nomJ2;
+		new FrameDebutPartie(this);
+
 		nomJ1 = nomJ2 = "n";
 		
-		while(!f.estDebuter());
+		while(!Controleur.debuterPartie);
 	
 		System.out.println();
 
-		nomJ1 = f.getNomJ1();
-		nomJ2 = f.getNomJ2();
+		nomJ1 = this.metier.getJoueur(1).getNom();
+		nomJ2 = this.metier.getJoueur(2).getNom();
+
+		int joueur = this.getJoueurEnCours();
 		
-
-		Scanner sc = new Scanner(System.in);
-
-		int joueur = 1 + (int) (Math.random() * 3);
-
+		this.ihm = new FramePuissance4(this);
 		this.ihm.afficherGrille();
-		while(!this.metier.victoire() )
-		{
-			int col;
-			do
-			{
-				System.out.print( (joueur == 1 ? nomJ1 : nomJ2 ) + " choississez une colonne : ");
-				col = sc.nextInt();
-			}
-			while(col > this.getNbColonne() || col < 0);
 
-			this.metier.setCase(joueur, col - 1);
-			this.ihm.afficherGrille();
-			
-			joueur = (joueur == 1) ?  2 : 1;
-
-		}
+		while( !this.metier.victoire() );
+		
 
 		if(this.metier.victoire())
 		{
 			System.out.println((joueur == 1 ? nomJ2 : nomJ1) + " vous avez gagnez");
 		}
 
-		sc.close();
 	}
 
 	public static void main(String[] args)
