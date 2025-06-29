@@ -1,14 +1,40 @@
 package JeuPuissance4.vue;
 
+import javax.swing.JFrame;
+
 import JeuPuissance4.Controleur;
 
-public class FramePuissance4 
+public class FramePuissance4 extends JFrame
 {
 	private Controleur ctrl;
+	private PanelPuissance4 panelPuissance4;
 
 	public FramePuissance4(Controleur ctrl)
 	{
+		/******************/
+		/*   Info Frame   */
+		/******************/
+		
+
+		/*******************************/
+		/*   Creation Des Composants   */
+		/*******************************/
 		this.ctrl = ctrl;
+
+		this.panelPuissance4 = new PanelPuissance4(this.ctrl);
+
+		/*************************************/
+		/*   Positionnement Des Composants   */
+		/*************************************/
+
+		this.add(this.panelPuissance4);
+
+
+		/*********************************/
+		/*   Activation Des Composants   */
+		/*********************************/
+		this.pack();
+		this.setVisible(true);
 	}
 
 	public void afficherGrille()
@@ -40,5 +66,10 @@ public class FramePuissance4
 		sRet += "\n";
 
 		System.out.println(sRet);
+	}
+
+	public void majIhm()
+	{
+		this.panelPuissance4.majIhm();
 	}
 }

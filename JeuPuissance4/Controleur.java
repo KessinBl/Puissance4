@@ -1,5 +1,6 @@
 package JeuPuissance4;
 
+import JeuPuissance4.vue.FrameDebutPartie;
 import JeuPuissance4.vue.FramePuissance4;
 
 import java.util.Scanner;
@@ -49,24 +50,32 @@ public class Controleur
 	/*   Autres Methodes   */
 	/***********************/
 
+	public void rejouer()
+	{
+		this.metier.rejouer();
+		this.ihm.majIhm();
+	}
+
 	public void jouer()
 	{
-		Scanner sc = new Scanner(System.in);
-		String  nomJ1 ;
-		String  nomJ2 ;
-		System.out.println("*************************");
-		System.out.print("Nom joueur 1 : ");
-		nomJ1 = sc.nextLine();
-		this.affecterJoueur(1, nomJ1);
-		System.out.print("Nom joueur 2 : ");
-		nomJ2 = sc.nextLine();
-		this.affecterJoueur(2, nomJ2);
-		System.out.println("*************************");
+		FrameDebutPartie f = new FrameDebutPartie(this);
+		String nomJ1,nomJ2;
+		nomJ1 = nomJ2 = "n";
+		
+		while(!f.estDebuter());
+	
+		System.out.println();
 
-		int joueur = 1 + (int) Math.random() * 3;
+		nomJ1 = f.getNomJ1();
+		nomJ2 = f.getNomJ2();
+		
+
+		Scanner sc = new Scanner(System.in);
+
+		int joueur = 1 + (int) (Math.random() * 3);
 
 		this.ihm.afficherGrille();
-		while(!this.metier.victoire())
+		while(!this.metier.victoire() )
 		{
 			int col;
 			do
@@ -85,7 +94,7 @@ public class Controleur
 
 		if(this.metier.victoire())
 		{
-			System.out.println(joueur == 1 ? nomJ2 : nomJ1 + " vous avez gagnez");
+			System.out.println((joueur == 1 ? nomJ2 : nomJ1) + " vous avez gagnez");
 		}
 
 		sc.close();
