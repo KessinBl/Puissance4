@@ -22,7 +22,7 @@ public class Metier
 	/*   Accesseurs attributs   */
 	/****************************/
 
-	public Integer getCase(int lig,int col)
+	public Integer getCase(int lig ,int col)
 	{
 		if(this.grilleJeu[lig][col] != null) return this.grilleJeu[lig][col];
 		return null;
@@ -34,6 +34,16 @@ public class Metier
 		if(joueur == 2) return joueur2;
 
 		return null;
+	}
+
+	public int getNbLigne()
+	{
+		return Metier.NB_LIG;
+	}
+
+	public int getNbColonne()
+	{
+		return Metier.NB_COL;
 	}
 
 	/*******************************/
@@ -51,9 +61,20 @@ public class Metier
 		return true;
 	}
 
-	public void setCase(int numJoueur)
+	public void setCase(Integer numJoueur , int col)
 	{
-		
+		boolean estVisite = false;
+		if(!this.estPleine(col))
+		{
+			for(int lig = Metier.NB_LIG -1; lig >= 0; lig--)
+			{
+				if(!estVisite && this.grilleJeu[lig][col] == null)
+				{
+					this.grilleJeu[lig][col] = numJoueur;
+					estVisite = true;
+				}
+			}
+		}
 	}
 
 	/***********************/
@@ -62,12 +83,7 @@ public class Metier
 
 	public boolean estPleine(int col )
 	{
-		for(int lig = 0; lig < Metier.NB_LIG; lig++)
-		{
-			if(this.grilleJeu[lig][col] == null)
-				return false;
-		}
-		return true;
+		return this.grilleJeu[0][col] != null;
 	}
 
 	public boolean estGrillePleine()
@@ -97,7 +113,107 @@ public class Metier
 
 	public boolean victoire()
 	{
-		return true;
+		// vérification de victoire en ligne
+		for(int lig = 0; lig < Metier.NB_LIG; lig++)
+		{
+			for(int col = 0; col < Metier.NB_COL / 2; col++)
+			{
+				Integer caseActu = this.grilleJeu[lig][col];
+
+				if(caseActu != null)
+				{
+					//j'utilise ça pour éviter d'utiliser break (Smiley qui rigole)
+					int suivant = 0;
+
+					for(int cpt = 0; cpt < 3; cpt++)
+					{
+						if(this.grilleJeu[lig][col + (cpt + 1)] == caseActu)
+						{
+							suivant++;
+						}
+					}
+
+					if(suivant == 3) return true;
+				}
+			}
+		}
+
+		// vérification de victoire en colonne
+		for(int lig = 0; lig < Metier.NB_LIG / 2; lig++)
+		{
+			for(int col = 0; col < Metier.NB_COL ; col++)
+			{
+				Integer caseActu = this.grilleJeu[lig][col];
+
+				if(caseActu != null)
+				{
+					//j'utilise ça pour éviter d'utiliser break (Smiley qui rigole)
+					int suivant = 0;
+
+					for(int cpt = 0; cpt < 3; cpt++)
+					{
+						if(this.grilleJeu[lig + (cpt + 1)][col] == caseActu)
+						{
+							suivant++;
+						}
+					}
+
+					if(suivant == 3) return true;
+				}
+			}
+		}
+
+		// vérification de victoire en diagonale vers la droite
+		for(int lig = 0; lig < Metier.NB_LIG / 2; lig++)
+		{
+			for(int col = 0; col < Metier.NB_COL / 2; col++)
+			{
+				Integer caseActu = this.grilleJeu[lig][col];
+
+				if(caseActu != null)
+				{
+					//j'utilise ça pour éviter d'utiliser break (Smiley qui rigole)
+					int suivant = 0;
+
+					for(int cpt = 0; cpt < 3; cpt++)
+					{
+						if(this.grilleJeu[lig + (cpt + 1)][col + (cpt + 1)] == caseActu)
+						{
+							suivant++;
+						}
+					}
+
+					if(suivant == 3) return true;
+				}
+			}
+		}
+
+		// vérification de victoire en diagonale vers la gauche
+		for(int lig = Metier.NB_LIG -1; lig >= Metier.NB_LIG / 2; lig--)
+		{
+			for(int col = Metier.NB_COL -1; col >= Metier.NB_COL / 2; col--)
+			{
+				Integer caseActu = this.grilleJeu[lig][col];
+
+				if(caseActu != null)
+				{
+					//j'utilise ça pour éviter d'utiliser break (Smiley qui rigole)
+					int suivant = 0;
+
+					for(int cpt = 0; cpt < 3; cpt++)
+					{
+						if(this.grilleJeu[lig - (cpt + 1)][col - (cpt + 1)] == caseActu)
+						{
+							suivant++;
+						}
+					}
+
+					if(suivant == 3) return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 }
