@@ -17,8 +17,7 @@ public class Controleur
 	public Controleur()
 	{
 		this.metier = new Metier();
-		this.ihm    = new FramePuissance4(this);;
-
+		this.ihm    = null;
 		this.joueurEnCours = this.joueurAuHasard();
 	}
 
@@ -58,7 +57,10 @@ public class Controleur
 
 	public void setJoueurEnCours()
 	{
+		String nomJoueurEnCours ="";
 		this.joueurEnCours = this.joueurEnCours == 1 ? 2 : 1;
+		nomJoueurEnCours   = this.metier.getJoueur(this.joueurEnCours).getNom();
+		this.ihm.ajouterInformation(nomJoueurEnCours + " à toi de jouer");
 	}
 
 	/***********************/
@@ -67,7 +69,7 @@ public class Controleur
 
 	private Integer joueurAuHasard()
 	{
-		return 1 + (int)(Math.random() * 3);
+		return 1 + (int)(Math.random() * 2);
 	}
 	
 	public boolean estGrillePleine()
@@ -106,9 +108,19 @@ public class Controleur
 
 		nomJ1 = nomJ2 = "n";
 		
-		while(!Controleur.debuterPartie);
-	
-		System.out.println();
+		
+		while (!Controleur.debuterPartie) 
+		{
+			try 
+			{
+				Thread.sleep(100); 
+			} 
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+		}
+			
 
 		nomJ1 = this.metier.getJoueur(1).getNom();
 		nomJ2 = this.metier.getJoueur(2).getNom();
@@ -118,12 +130,27 @@ public class Controleur
 		this.ihm = new FramePuissance4(this);
 		this.ihm.afficherGrille();
 
-		while( !this.metier.victoire() );
+		this.ihm.ajouterInformation(this.metier.getJoueur(this.getJoueurEnCours()).getNom() + " à toi de jouer");
+
+		while( !this.metier.victoire() )
+		{
+			try 
+			{
+				Thread.sleep(100); 
+			} 
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		
 		
 
 		if(this.metier.victoire())
 		{
-			System.out.println((joueur == 1 ? nomJ2 : nomJ1) + " vous avez gagnez");
+			System.out.println((joueur == 1 ? nomJ1 : nomJ2) + " vous avez gagné");
+			this.ihm.ajouterInformation((joueur == 1 ? nomJ1 : nomJ2) + " vous avez gagné");
+			this.ihm.gagner();
 		}
 
 	}

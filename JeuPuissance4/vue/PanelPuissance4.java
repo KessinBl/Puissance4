@@ -68,7 +68,7 @@ public class PanelPuissance4 extends JPanel implements ActionListener
 		super.paintComponent(g);
 
 		int x = 35;
-		int y = 100;
+		int y = 50;
 
 		g = (Graphics2D) g;
 
@@ -80,14 +80,14 @@ public class PanelPuissance4 extends JPanel implements ActionListener
 		{
 			for(int col = 0; col < this.ctrl.getNbColonne(); col++)
 			{
-				g.fillOval(x + (col * 210), y, 100, 100);
+				g.fillOval(x + (col * 210), y, 110, 110);
 			}
 			x = 35;
 			y += 130;
 		}
 
 		x = 35;
-		y = 100;
+		y = 50;
 		for(int lig = 0; lig < this.ctrl.getNbLigne(); lig++)
 		{
 			for(int col = 0; col < this.ctrl.getNbColonne(); col++)
@@ -95,13 +95,13 @@ public class PanelPuissance4 extends JPanel implements ActionListener
 				if(this.ctrl.getCase(lig, col) != null && this.ctrl.getCase(lig, col) == 1)
 				{
 					g.setColor(new Color(255,10,10));
-					g.fillOval(x + (col * 210), y, 100, 100);
+					g.fillOval(x + (col * 210), y, 110, 110);
 				}
 
 				if(this.ctrl.getCase(lig, col) != null && this.ctrl.getCase(lig, col) == 2)
 				{
 					g.setColor(new Color(200,200,10));
-					g.fillOval(x + (col * 210), y, 100, 100);
+					g.fillOval(x + (col * 210), y, 110, 110);
 				}
 			}
 			x = 35;
@@ -130,6 +130,14 @@ public class PanelPuissance4 extends JPanel implements ActionListener
 					this.ctrl.setJoueurEnCours();
 				}
 			}
+		}
+	}
+
+	public void gagner()
+	{
+		for(JButton b : this.tabButtons)
+		{
+			b.setEnabled(false);
 		}
 	}
 

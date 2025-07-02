@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -41,6 +42,7 @@ public class FrameDebutPartie extends JFrame implements ActionListener
 
 		this.setTitle("Début de la partie");
 		this.setLayout(new GridLayout(4,1));
+		this.setAlwaysOnTop(true);
 
 		/*******************************/
 		/*   Creation Des Composants   */
@@ -51,11 +53,15 @@ public class FrameDebutPartie extends JFrame implements ActionListener
 		this.estDebuter = false;
 
 		this.tabBtnValider = new JButton[2];
-		this.tabBtnValider[0] = new JButton("Valider");
-		this.tabBtnValider[1] = new JButton("Valider");
+		this.tabBtnValider[0] = new JButton("<html> <style> p{color : WHITE;}</style>  <p>Valider</p> </html>");
+		this.tabBtnValider[1] = new JButton("<html> <style> p{color : WHITE;}</style>  <p>Valider</p> </html>");
 
-		this.btnCommencer     = new JButton("Commencer la partie");
+		this.tabBtnValider[0].setBackground(Color.GRAY);
+		this.tabBtnValider[1].setBackground(Color.GRAY);
+
+		this.btnCommencer     = new JButton("<html> <style> h1{ color : WHITE;}</style> <h1> START </h1></html>");
 		this.btnCommencer.setEnabled(false);
+		this.btnCommencer.setBackground(new Color(205,20,20));
 
 		this.txtJoueur1       = new JTextField(30);
 		this.txtJoueur2       = new JTextField(30);
@@ -121,6 +127,7 @@ public class FrameDebutPartie extends JFrame implements ActionListener
 			{
 				this.ctrl.affecterJoueur(1, this.txtJoueur1.getText().trim());
 				this.tabBtnValider[0].setEnabled(false);
+				this.txtJoueur1      .setEnabled(false);
 			}
 		}
 
@@ -134,11 +141,11 @@ public class FrameDebutPartie extends JFrame implements ActionListener
 			{
 				this.ctrl.affecterJoueur(2, this.txtJoueur2.getText().trim());
 				this.tabBtnValider[1].setEnabled(false);
+				this.txtJoueur2      .setEnabled(false);
 			}
 		}
 
 		this.btnCommencer.setEnabled(!this.tabBtnValider[0].isEnabled() && !this.tabBtnValider[1].isEnabled());
-
 		if(e.getSource() == this.btnCommencer)
 		{
 			Controleur.debuterPartie = true;
