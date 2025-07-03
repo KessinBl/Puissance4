@@ -3,6 +3,7 @@ package JeuPuissance4.vue;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import JeuPuissance4.Controleur;
 
@@ -34,12 +35,13 @@ public class FramePuissance4 extends JFrame
 		this.add(this.panelPuissance4 ,BorderLayout.CENTER);
 		this.add(this.panelInteraction,BorderLayout.SOUTH);
 
-
-		/*********************************/
-		/*   Activation Des Composants   */
-		/*********************************/
 		this.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+
+	/***********************/
+	/*   Autres Methodes   */
+	/***********************/
 
 	public void afficherGrille()
 	{
@@ -90,5 +92,20 @@ public class FramePuissance4 extends JFrame
 	public void ajouterInformation(String message)
 	{
 		this.panelInteraction.ajouterInformation(message);
+	}
+
+	public void egalite()
+	{
+		JOptionPane.showMessageDialog(this,"Égalité.. vous êtes nuls");
+	}
+
+	public void victoire(String nomJoueur)
+	{
+		JOptionPane.showMessageDialog(this,nomJoueur + " est vainqueur");
+	}
+
+	public void setLblVictoire()
+	{
+		this.panelInteraction.setLblVictoire();
 	}
 }

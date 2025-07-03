@@ -189,7 +189,7 @@ public class Metier
 		}
 
 		// vérification de victoire en diagonale vers la gauche
-		for(int lig = Metier.NB_LIG -1; lig >= Metier.NB_LIG / 2; lig--)
+		for(int lig = 0; lig < Metier.NB_LIG / 2; lig++)
 		{
 			for(int col = Metier.NB_COL -1; col >= Metier.NB_COL / 2; col--)
 			{
@@ -202,7 +202,7 @@ public class Metier
 
 					for(int cpt = 0; cpt < 3; cpt++)
 					{
-						if(this.grilleJeu[lig - (cpt + 1)][col - (cpt + 1)] == caseActu)
+						if(this.grilleJeu[lig + (cpt + 1)][col - (cpt + 1)] == caseActu)
 						{
 							suivant++;
 						}

@@ -43,6 +43,7 @@ public class FrameDebutPartie extends JFrame implements ActionListener
 		this.setTitle("Début de la partie");
 		this.setLayout(new GridLayout(4,1));
 		this.setAlwaysOnTop(true);
+		this.setBackground(new Color(100,255,100));
 
 		/*******************************/
 		/*   Creation Des Composants   */
@@ -74,14 +75,17 @@ public class FrameDebutPartie extends JFrame implements ActionListener
 		panelJ1.add(new JLabel("Joueur 1 : "));
 		panelJ1.add(this.txtJoueur1);
 		panelJ1.add(this.tabBtnValider[0]);
+		panelJ1.setOpaque(false);
 
 		panelJ2 = new JPanel();
 		panelJ2.add(new JLabel("Joueur 2 : "));
 		panelJ2.add(this.txtJoueur2);
 		panelJ2.add(this.tabBtnValider[1]);
+		panelJ2.setOpaque(false);
 
 		panelCommencer = new JPanel();
 		panelCommencer.add(this.btnCommencer);
+		panelCommencer.setOpaque(false);
 
 		/*************************************/
 		/*   Positionnement Des Composants   */
