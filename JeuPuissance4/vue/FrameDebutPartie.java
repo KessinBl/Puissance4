@@ -185,12 +185,12 @@ public class FrameDebutPartie extends JFrame implements ActionListener
 	{
 		private Image backgroundImage;
 
-		public PanelFond(String imagePath) 
+		public PanelFond(String chemin) 
 		{
-			this.backgroundImage = new ImageIcon(imagePath).getImage();
+			this.backgroundImage = new ImageIcon(chemin).getImage();
 		}
 
-		protected void paintComponent(Graphics g) 
+		public void paintComponent(Graphics g) 
 		{
 			super.paintComponent(g);
 

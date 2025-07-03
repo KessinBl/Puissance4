@@ -1,6 +1,9 @@
 ./JeuPuissance4/Controleur.java
 
 ./JeuPuissance4/vue/FramePuissance4.java
+./JeuPuissance4/vue/PanelPuissance4.java
+./JeuPuissance4/vue/PanelInteraction.java
+./JeuPuissance4/vue/FrameDebutPartie.java
 
 ./JeuPuissance4/modele/Metier.java
 ./JeuPuissance4/modele/Joueur.java
