@@ -108,4 +108,10 @@ public class FramePuissance4 extends JFrame
 	{
 		this.panelInteraction.setLblVictoire();
 	}
+
+	public void recommencer()
+	{
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.panelInteraction.recommencer();
+	}
 }

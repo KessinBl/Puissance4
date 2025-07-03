@@ -10,7 +10,9 @@ import javax.swing.JTextField;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -27,7 +29,7 @@ public class FrameDebutPartie extends JFrame implements ActionListener
 	private JTextField        txtJoueur1;
 	private JTextField        txtJoueur2;
 
-	private boolean estDebuter;
+	private PanelFond          panelFond;
 
 	public FrameDebutPartie(Controleur ctrl)
 	{
@@ -41,7 +43,6 @@ public class FrameDebutPartie extends JFrame implements ActionListener
 		/******************/
 
 		this.setTitle("Début de la partie");
-		this.setLayout(new GridLayout(4,1));
 		this.setAlwaysOnTop(true);
 		this.setBackground(new Color(100,255,100));
 
@@ -51,9 +52,11 @@ public class FrameDebutPartie extends JFrame implements ActionListener
 
 		this.ctrl = ctrl;
 
-		this.estDebuter = false;
+		this.panelFond = new PanelFond("JeuPuissance4/vue/images/Fond2.png");
+		this.panelFond.setLayout(new GridLayout(4,1));
+		this.setContentPane(panelFond);
 
-		this.tabBtnValider = new JButton[2];
+		this.tabBtnValider    = new JButton[2];
 		this.tabBtnValider[0] = new JButton("<html> <style> p{color : WHITE;}</style>  <p>Valider</p> </html>");
 		this.tabBtnValider[1] = new JButton("<html> <style> p{color : WHITE;}</style>  <p>Valider</p> </html>");
 
@@ -103,15 +106,7 @@ public class FrameDebutPartie extends JFrame implements ActionListener
 		this.tabBtnValider[1].addActionListener(this);
 		this.btnCommencer    .addActionListener(this);
 
-		this.pack();
-
-		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-
-		int y = (int)(dimension.getHeight() - this.getHeight()) / 2;
-		int x = (int)(dimension.getWidth () - this.getWidth ()) / 2; 
-
-		this.setLocation(x,y);
-		
+		this.dimensionerFenetre();
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 	}
@@ -150,16 +145,58 @@ public class FrameDebutPartie extends JFrame implements ActionListener
 		}
 
 		this.btnCommencer.setEnabled(!this.tabBtnValider[0].isEnabled() && !this.tabBtnValider[1].isEnabled());
+
 		if(e.getSource() == this.btnCommencer)
 		{
 			Controleur.debuterPartie = true;
-			this.dispose();
+			this.setVisible(false);
+			this.ctrl.afficherIhm();
 		}
 	}
 
-	public boolean estDebuter()
+	public void recommencer()
 	{
-		return this.estDebuter;
+		this.txtJoueur1.setEnabled(true);
+		this.txtJoueur2.setEnabled(true);
+
+		this.txtJoueur1.setText("");
+		this.txtJoueur2.setText("");
+
+		this.tabBtnValider[0].setEnabled(true);
+		this.tabBtnValider[1].setEnabled(true);
+
+		this.btnCommencer.setEnabled(false);
+		this.dimensionerFenetre();
+	}
+
+	private void dimensionerFenetre()
+	{
+		this.pack();
+
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+
+		int y = (int)(dimension.getHeight() - this.getHeight()) / 2;
+		int x = (int)(dimension.getWidth () - this.getWidth ()) / 2; 
+
+		this.setLocation(x,y);
+	}
+
+	private class PanelFond extends JPanel 
+	{
+		private Image backgroundImage;
+
+		public PanelFond(String imagePath) 
+		{
+			this.backgroundImage = new ImageIcon(imagePath).getImage();
+		}
+
+		protected void paintComponent(Graphics g) 
+		{
+			super.paintComponent(g);
+
+			if (this.backgroundImage != null)
+				g.drawImage(this.backgroundImage, 0, 0, getWidth(), getHeight(), this);
+		}
 	}
 
 }

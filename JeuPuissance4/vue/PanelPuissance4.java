@@ -82,6 +82,7 @@ public class PanelPuissance4 extends JPanel implements ActionListener
 			{
 				g.fillOval(x + (col * 210), y, 110, 110);
 			}
+
 			x = 35;
 			y += 130;
 		}
@@ -110,6 +111,9 @@ public class PanelPuissance4 extends JPanel implements ActionListener
 
 	}
 
+	/*****************************/
+	/*   Écoute Des Composants   */
+	/*****************************/
 	public void actionPerformed(ActionEvent e)
 	{
 		if(this.ctrl.estGrillePleine())
@@ -133,6 +137,9 @@ public class PanelPuissance4 extends JPanel implements ActionListener
 		}
 	}
 
+	/***********************/
+	/*   Autres Methodes   */
+	/***********************/
 	public void gagner()
 	{
 		for(JButton b : this.tabButtons)

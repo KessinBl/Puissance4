@@ -3,24 +3,25 @@ package JeuPuissance4;
 import JeuPuissance4.vue.FrameDebutPartie;
 import JeuPuissance4.vue.FramePuissance4;
 
-import javax.swing.JOptionPane;
-
 import JeuPuissance4.modele.Joueur;
 import JeuPuissance4.modele.Metier;
 
 public class Controleur 
 {
 	public static boolean debuterPartie = false;
-	private Metier          metier;
-	private FramePuissance4    ihm;
+
+	private Metier                     metier;
+	private FramePuissance4               ihm;
+	private FrameDebutPartie frameDebutPartie;
 
 	private Integer    joueurEnCours;
 
 	public Controleur()
 	{
-		this.metier = new Metier();
-		this.ihm    = null;
-		this.joueurEnCours = this.joueurAuHasard();
+		this.metier           = new Metier();
+		this.ihm              = null;
+		this.frameDebutPartie = null;
+		this.joueurEnCours    = this.joueurAuHasard();
 	}
 
 	/****************************/
@@ -47,6 +48,10 @@ public class Controleur
 		return this.joueurEnCours;
 	}
 
+	public Joueur getJoueur(int numJoueur)
+	{
+		return this.metier.getJoueur(numJoueur);
+	}
 
 	/*******************************/
 	/*   Modificateurs attributs   */
@@ -68,18 +73,22 @@ public class Controleur
 		}
 	}
 
+	public void afficherIhm()
+	{
+		if(this.ihm != null)
+		{
+			this.ihm.setVisible(true);
+			this.ihm.recommencer();
+			this.setJoueurEnCours();
+		}
+	}
+
 	/***********************/
 	/*   Autres Methodes   */
 	/***********************/
 
 	private Integer joueurAuHasard()
 	{
-		int cpt = 0;
-		while(cpt < 20)
-		{
-			System.out.println( 1 + (int)(Math.random() * 2));
-			cpt ++;
-		}
 		return 1 + (int)(Math.random() * 2);
 	}
 	
@@ -109,8 +118,6 @@ public class Controleur
 			this.ihm.victoire(nomJoueur);
 			this.ihm.setLblVictoire();
 			this.ihm.ajouterInformation(nomJoueur + " est vainqueur");
-
-			System.out.println( nomJoueur + " est vainqueur");
 		}
 
 		if(!this.metier.victoire() && this.estGrillePleine() )
@@ -125,8 +132,6 @@ public class Controleur
 		this.metier.rejouer();
 		this.ihm   .rejouer();
 		this.ihm   .majIhm ();
-		
-		this.jouer();
 	}
 
 	public void afficherGrille()
@@ -134,17 +139,12 @@ public class Controleur
 		this.ihm.afficherGrille();
 	}
 
-	public Joueur getJoueur(int numJoueur)
-	{
-		return this.metier.getJoueur(numJoueur);
-	}
-
 	public void jouer()
 	{
 		if(!Controleur.debuterPartie)
 		{
-			new FrameDebutPartie(this);
-			
+			this.frameDebutPartie = new FrameDebutPartie(this);
+
 			while (!Controleur.debuterPartie) 
 			{
 				try 
@@ -166,10 +166,18 @@ public class Controleur
 
 	}
 
+	public void recommencer()
+	{
+		this.ihm             .setVisible(false);
+		this.frameDebutPartie.setVisible(true);
+		this.frameDebutPartie.recommencer();
+
+		this.rejouer();
+	}
+
 	public static void main(String[] args)
 	{
 		new Controleur().jouer();
-
 	}
 
 
