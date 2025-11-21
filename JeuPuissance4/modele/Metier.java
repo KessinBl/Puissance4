@@ -113,103 +113,56 @@ public class Metier
 
 	public boolean victoire()
 	{
-		// vérification de victoire en ligne
-		for(int lig = 0; lig < Metier.NB_LIG; lig++)
+		// Vérification horizontale
+		for(int lig = 0; lig < NB_LIG; lig++)
 		{
-			for(int col = 0; col < Metier.NB_COL / 2; col++)
+			for(int col = 0; col <= NB_COL - 4; col++)
 			{
-				Integer caseActu = this.grilleJeu[lig][col];
-
-				if(caseActu != null)
-				{
-					//j'utilise ça pour éviter d'utiliser break (Smiley qui rigole)
-					int suivant = 0;
-
-					for(int cpt = 0; cpt < 3; cpt++)
-					{
-						if(this.grilleJeu[lig][col + (cpt + 1)] == caseActu)
-						{
-							suivant++;
-						}
-					}
-
-					if(suivant == 3) return true;
-				}
+				Integer val = grilleJeu[lig][col];
+				if(val != null &&
+				val.equals(grilleJeu[lig][col+1]) &&
+				val.equals(grilleJeu[lig][col+2]) &&
+				val.equals(grilleJeu[lig][col+3])) return true;
 			}
 		}
 
-		// vérification de victoire en colonne
-		for(int lig = 0; lig < Metier.NB_LIG / 2; lig++)
+		// Vérification verticale
+		for(int lig = 0; lig <= NB_LIG - 4; lig++)
 		{
-			for(int col = 0; col < Metier.NB_COL ; col++)
+			for(int col = 0; col < NB_COL; col++)
 			{
-				Integer caseActu = this.grilleJeu[lig][col];
-
-				if(caseActu != null)
-				{
-					//j'utilise ça pour éviter d'utiliser break (Smiley qui rigole)
-					int suivant = 0;
-
-					for(int cpt = 0; cpt < 3; cpt++)
-					{
-						if(this.grilleJeu[lig + (cpt + 1)][col] == caseActu)
-						{
-							suivant++;
-						}
-					}
-
-					if(suivant == 3) return true;
-				}
+				Integer val = grilleJeu[lig][col];
+				if(val != null &&
+				val.equals(grilleJeu[lig+1][col]) &&
+				val.equals(grilleJeu[lig+2][col]) &&
+				val.equals(grilleJeu[lig+3][col]))
+					return true;
 			}
 		}
 
-		// vérification de victoire en diagonale vers la droite
-		for(int lig = 0; lig < Metier.NB_LIG / 2; lig++)
+		// Vérification diagonale vers la droite
+		for(int lig = 0; lig <= NB_LIG - 4; lig++)
 		{
-			for(int col = 0; col < Metier.NB_COL / 2; col++)
+			for(int col = 0; col <= NB_COL - 4; col++)
 			{
-				Integer caseActu = this.grilleJeu[lig][col];
-
-				if(caseActu != null)
-				{
-					//j'utilise ça pour éviter d'utiliser break (Smiley qui rigole)
-					int suivant = 0;
-
-					for(int cpt = 0; cpt < 3; cpt++)
-					{
-						if(this.grilleJeu[lig + (cpt + 1)][col + (cpt + 1)] == caseActu)
-						{
-							suivant++;
-						}
-					}
-
-					if(suivant == 3) return true;
-				}
+				Integer val = grilleJeu[lig][col];
+				if(val != null &&
+				val.equals(grilleJeu[lig+1][col+1]) &&
+				val.equals(grilleJeu[lig+2][col+2]) &&
+				val.equals(grilleJeu[lig+3][col+3])) return true;
 			}
 		}
 
-		// vérification de victoire en diagonale vers la gauche
-		for(int lig = 0; lig < Metier.NB_LIG / 2; lig++)
+		// Vérification diagonale vers la gauche
+		for(int lig = 0; lig <= NB_LIG - 4; lig++)
 		{
-			for(int col = Metier.NB_COL -1; col >= Metier.NB_COL / 2; col--)
+			for(int col = 3; col < NB_COL; col++)
 			{
-				Integer caseActu = this.grilleJeu[lig][col];
-
-				if(caseActu != null)
-				{
-					//j'utilise ça pour éviter d'utiliser break (Smiley qui rigole)
-					int suivant = 0;
-
-					for(int cpt = 0; cpt < 3; cpt++)
-					{
-						if(this.grilleJeu[lig + (cpt + 1)][col - (cpt + 1)] == caseActu)
-						{
-							suivant++;
-						}
-					}
-
-					if(suivant == 3) return true;
-				}
+				Integer val = grilleJeu[lig][col];
+				if(val != null &&
+				val.equals(grilleJeu[lig+1][col-1]) &&
+				val.equals(grilleJeu[lig+2][col-2]) &&
+				val.equals(grilleJeu[lig+3][col-3])) return true;
 			}
 		}
 
