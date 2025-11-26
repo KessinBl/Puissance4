@@ -50,11 +50,15 @@ Puis exécuter avec la commande :
 
 Deux manière de faire :
 	
-	Ouvrez ce dossier dans votre explorateur de fichier et double-cliquez sur le fichier run.bat
+Ouvrez ce dossier dans votre explorateur de fichier et double-cliquez sur le fichier 
+
+	run.bat
 
 ou
 
-	dans votre cmd , entrez simplement la commande : run.bat
+dans votre cmd , entrez simplement la commande : 
+
+	run.bat
 
 Bien entendu sur windows ou linux , placez vous toujours à la racine du répertoire Puissance4.
 
