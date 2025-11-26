@@ -63,53 +63,76 @@ public class PanelPuissance4 extends JPanel implements ActionListener
 		}
 	}
 
+	@Override
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
 
-		int x = 35;
-		int y = 50;
+		Graphics2D g2 = (Graphics2D) g;
 
-		g = (Graphics2D) g;
+		int nbLignes  = this.ctrl.getNbLigne();
+		int nbColonnes = this.ctrl.getNbColonne();
 
-		g.setColor(new Color(10,20,255));
-		g.fillRect(0, 0, this.getWidth(), this.getHeight());
-		
-		g.setColor(new Color(255,255,255));
-		for(int lig = 0; lig < this.ctrl.getNbLigne(); lig++)
+		// On récupère l’espace disponible pour la grille (sous les flèches)
+		int topMargin = 60;    // laisse la place aux flèches
+		int leftMargin = 20;
+		int rightMargin = 20;
+		int bottomMargin = 20;
+
+		int zoneWidth  = this.getWidth()  - leftMargin - rightMargin;
+		int zoneHeight = this.getHeight() - topMargin  - bottomMargin;
+
+		// Taille d'une cellule → carrée
+		int cellSize = Math.min(zoneWidth / nbColonnes, zoneHeight / nbLignes);
+
+		// Décalage réel si la grille ne prend pas tout l’espace horizontal
+		int totalGridWidth = cellSize * nbColonnes;
+		int xOffset = (this.getWidth() - totalGridWidth) / 2;
+
+		// Couleur du plateau
+		g2.setColor(new Color(10, 20, 255));
+		g2.fillRect(0, 0, this.getWidth(), this.getHeight());
+
+		// --- DESSIN DES TROUS BLANCS ---
+		g2.setColor(Color.white);
+		for (int lig = 0; lig < nbLignes; lig++)
 		{
-			for(int col = 0; col < this.ctrl.getNbColonne(); col++)
+			for (int col = 0; col < nbColonnes; col++)
 			{
-				g.fillOval(x + (col * 210), y, 110, 110);
-			}
+				int x = xOffset + col * cellSize;
+				int y = topMargin + lig * cellSize;
 
-			x = 35;
-			y += 130;
+				int circleSize = (int)(cellSize * 0.8);
+				int gap = (cellSize - circleSize) / 2;
+
+				g2.fillOval(x + gap, y + gap, circleSize, circleSize);
+			}
 		}
 
-		x = 35;
-		y = 50;
-		for(int lig = 0; lig < this.ctrl.getNbLigne(); lig++)
+		// --- DESSIN DES JETONS ---
+		for (int lig = 0; lig < nbLignes; lig++)
 		{
-			for(int col = 0; col < this.ctrl.getNbColonne(); col++)
+			for (int col = 0; col < nbColonnes; col++)
 			{
-				if(this.ctrl.getCase(lig, col) != null && this.ctrl.getCase(lig, col) == 1)
-				{
-					g.setColor(new Color(255,10,10));
-					g.fillOval(x + (col * 210), y, 110, 110);
-				}
+				Integer value = this.ctrl.getCase(lig, col);
+				if (value == null) continue;
 
-				if(this.ctrl.getCase(lig, col) != null && this.ctrl.getCase(lig, col) == 2)
-				{
-					g.setColor(new Color(200,200,10));
-					g.fillOval(x + (col * 210), y, 110, 110);
-				}
+				int x = xOffset + col * cellSize;
+				int y = topMargin + lig * cellSize;
+
+				int circleSize = (int)(cellSize * 0.8);
+				int gap = (cellSize - circleSize) / 2;
+
+				if (value == 1)
+					g2.setColor(new Color(255, 10, 10));   // Rouge
+				else if (value == 2)
+					g2.setColor(new Color(200, 200, 10));  // Jaune
+
+				g2.fillOval(x + gap, y + gap, circleSize, circleSize);
 			}
-			x = 35;
-			y += 130;
 		}
-
 	}
+
 
 	/*****************************/
 	/*   Écoute Des Composants   */

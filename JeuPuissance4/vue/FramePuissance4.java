@@ -18,7 +18,7 @@ public class FramePuissance4 extends JFrame
 		/******************/
 		/*   Info Frame   */
 		/******************/
-		this.setSize(500,500);
+		this.setSize(1000,1000);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		/*******************************/
 		/*   Creation Des Composants   */
@@ -96,7 +96,7 @@ public class FramePuissance4 extends JFrame
 
 	public void egalite()
 	{
-		JOptionPane.showMessageDialog(this,"Égalité.. vous êtes nuls");
+		JOptionPane.showMessageDialog(this,"Égalité..");
 	}
 
 	public void victoire(String nomJoueur)
