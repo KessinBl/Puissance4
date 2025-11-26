@@ -65,4 +65,8 @@ Bien entendu sur windows ou linux , placez vous toujours à la racine du répert
 	nota : Ce projet a été realisé à l'issu de ma première année de formation.
 	Une version plus abouti est en cours de programmation.
 
+Particiant au projet :
+
+	Kessin Bleou
+
 
